@@ -30,7 +30,7 @@ mod model;
 mod utils;
 
 use model::db::ConnDsl;
-use api::index::{AppState, home, path};
+use api::index::{AppState};
 use api::auth::{signup, signin};
 use api::theme::{theme_and_comments,theme_list, theme_new, theme_add_comment};
 use api::community::{communitys, community_new, community_names, community_categorys, community_theme_list, community_like};
@@ -48,8 +48,6 @@ fn main() {
     let addr = SyncArbiter::start( num_cpus::get() * 4, move || { ConnDsl(conn.clone()) });
     server::new( move || App::with_state(AppState{ db: addr.clone()})
             .middleware(middleware::Logger::default())
-            .resource("/", |r| r.h(home))
-            .resource("/a/{tail:.*}", |r| r.h(path))
             .configure(|app| Cors::for_app(app)
             .allowed_methods(vec!["GET", "POST"])
             .allowed_headers(vec![header::AUTHORIZATION, header::ACCEPT])
@@ -72,8 +70,7 @@ fn main() {
                 r.method(Method::GET).h(theme_and_comments); 
                 r.method(Method::POST).with(theme_add_comment);
             })
-            .register())
-            .handler("/", fs::StaticFiles::new("public")))
+            .register()))
         .bind("127.0.0.1:8000").unwrap()
         .shutdown_timeout(0)
         .start();
