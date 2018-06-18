@@ -28,9 +28,9 @@ impl Handler<CommunityNew> for ConnDsl {
         let conn = &self.0.get().map_err(error::ErrorInternalServerError)?;
         diesel::insert_into(communitys).values(&new_community).execute(conn).map_err(error::ErrorInternalServerError)?;
         Ok(Msgs { 
-                status: 200,
-                message : "Article Publish Successful.".to_string(),
-        })        
+            status: 200,
+            message : "Article Publish Successful.".to_string(),
+        })
     }
 }
 
@@ -46,10 +46,10 @@ impl Handler<CommunityNames> for ConnDsl {
             name_list.push(community_one.community_name);
         }
         Ok(CommunityNamesMsgs { 
-                status: 200,
-                message : "TypeNamesMsgs.".to_string(),
-                community_names: name_list,
-        })        
+            status: 200,
+            message : "TypeNamesMsgs.".to_string(),
+            community_names: name_list,
+        })
     }
 }
 
@@ -66,10 +66,10 @@ impl Handler<CommunityCategorys> for ConnDsl {
         }
         let categorys_result = categorys_list.into_iter().collect::<HashSet<_>>().into_iter().collect::<Vec<_>>();
         Ok(CommunityCategorysMsgs { 
-                status: 200,
-                message : "TypeNamesMsgs.".to_string(),
-                community_categorys: categorys_result,
-        })        
+            status: 200,
+            message : "TypeNamesMsgs.".to_string(),
+            community_categorys: categorys_result,
+        })
     }
 }
 
@@ -82,10 +82,10 @@ impl Handler<Communitys> for ConnDsl {
         let conn = &self.0.get().map_err(error::ErrorInternalServerError)?;
         let community_list = communitys.load::<Community>(conn).map_err(error::ErrorInternalServerError)?;
         Ok(CommunitysMsgs { 
-                status: 200,
-                message : "TypeNamesMsgs.".to_string(),
-                communitys: community_list,
-        })        
+            status: 200,
+            message : "TypeNamesMsgs.".to_string(),
+            communitys: community_list,
+        })
     }
 }
 
@@ -132,7 +132,7 @@ impl Handler<CommunityThemes> for ConnDsl {
             status: 200,
             message : "theme_list result.".to_string(),
             community_theme_list: community_themes_list,
-        })       
+        })
     }
 }
 
@@ -170,6 +170,6 @@ impl Handler<CommunityLike> for ConnDsl {
         Ok(Msgs { 
             status: 200,
             message : "community like successful.".to_string(),
-        })       
+        })
     }
 }

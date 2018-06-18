@@ -55,19 +55,19 @@ fn main() {
             .max_age(3600)
             .resource("/user/signup", |r| { r.method(Method::POST).with(signup); })
             .resource("/user/signin", |r| { r.method(Method::POST).with(signin); })
-            .resource("/api/user_info", |r| { r.method(Method::GET).h(user_info); })
+            .resource("/api/users/info", |r| { r.method(Method::GET).h(user_info); })
             .resource("/api/user_delete", |r| { r.method(Method::GET).h(user_delete); })
-            .resource("/api/user_update", |r| { r.method(Method::POST).with(user_update); })
+            .resource("/api/users", |r| { r.method(Method::PATCH).with(user_update); })
             .resource("/api/theme_list", |r| { r.method(Method::POST).with(theme_list); })
             .resource("/api/theme_new", |r| { r.method(Method::POST).with(theme_new); })
-            .resource("/api/community/{community_name}", |r| { r.method(Method::GET).h(community_theme_list); })
-            .resource("/api/communitys", |r| { r.method(Method::GET).h(communitys); })
-            .resource("/api/community_new", |r| { r.method(Method::POST).with(community_new); })
-            .resource("/api/community_names", |r| { r.method(Method::POST).with(community_names); })
-            .resource("/api/community_categorys", |r| { r.method(Method::GET).h(community_categorys); })
-            .resource("/dyn/community/like", |r| { r.method(Method::POST).with(community_like); })
+            .resource("/api/communities/{community_name}", |r| { r.method(Method::GET).h(community_theme_list); })
+            .resource("/api/communities", |r| { r.method(Method::GET).h(communitys); })
+            .resource("/api/communities", |r| { r.method(Method::POST).with(community_new); })
+            .resource("/api/communities/names", |r| { r.method(Method::POST).with(community_names); })
+            .resource("/api/communities/categories", |r| { r.method(Method::GET).h(community_categorys); })
+            .resource("/api/communities/like", |r| { r.method(Method::POST).with(community_like); })
             .resource("/api/{theme_id}", |r| { 
-                r.method(Method::GET).h(theme_and_comments); 
+                r.method(Method::GET).h(theme_and_comments);
                 r.method(Method::POST).with(theme_add_comment);
             })
             .register()))
