@@ -56,7 +56,7 @@ fn main() {
             .resource("/user/signup", |r| { r.method(Method::POST).with(signup); })
             .resource("/user/signin", |r| { r.method(Method::POST).with(signin); })
             .resource("/api/users/info", |r| { r.method(Method::GET).h(user_info); })
-            .resource("/api/user_delete", |r| { r.method(Method::GET).h(user_delete); })
+            .resource("/api/users", |r| { r.method(Method::DELETE).h(user_delete); })
             .resource("/api/users", |r| { r.method(Method::PATCH).with(user_update); })
             .resource("/api/theme_list", |r| { r.method(Method::POST).with(theme_list); })
             .resource("/api/theme_new", |r| { r.method(Method::POST).with(theme_new); })
